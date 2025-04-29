@@ -38,7 +38,9 @@ class Database:
 
     def get_all_users(self) -> List[dict]:
         with self.driver.session() as session:
-            result = session.run("MATCH (u:User) RETURN id(u) AS id, u.username AS username, u.name AS name")
+            result = session.run(
+                "MATCH (u:User) RETURN id(u) AS id, u.username AS username, u.name AS name"
+            )
             return [dict(record) for record in result]
 
     # Post operations
@@ -115,7 +117,6 @@ class Database:
                 user_id=user_id
             )
             return [dict(record) for record in result]
-
 
 # ======================
 # Web Application
@@ -249,4 +250,3 @@ def follow():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
-
