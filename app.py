@@ -43,7 +43,10 @@ class Database:
             )
             return [dict(record) for record in result]
 
-    # Post operations
+    # ======================
+    # Post operations (Task 5 Step 2 updated here!)
+    # ======================
+
     def create_post(self, user_id: int, content: str) -> int:
         with self.driver.session() as session:
             result = session.run(
@@ -77,7 +80,10 @@ class Database:
             )
             return [dict(record) for record in result]
 
+    # ======================
     # Follow system
+    # ======================
+
     def follow_user(self, follower_id: int, followee_id: int) -> bool:
         with self.driver.session() as session:
             session.run(
@@ -121,6 +127,7 @@ class Database:
 # ======================
 # Web Application
 # ======================
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
 db = Database(uri="bolt://localhost:7687", user="neo4j", password="admin123")
@@ -135,6 +142,7 @@ with app.app_context():
 # ======================
 # API Endpoints
 # ======================
+
 @app.route('/api/users', methods=['GET'])
 def api_get_users():
     return jsonify(db.get_all_users())
@@ -175,6 +183,7 @@ def api_follow_user():
 # ======================
 # Frontend Routes
 # ======================
+
 @app.route('/')
 def home():
     users = db.get_all_users()
